@@ -23,7 +23,7 @@ public class Main {
 	private static Logger logger = LogManager.getLogger();
 	private static ElasticsearchTransportFactory tfactory = DataSourceUtil.transportElasticsearch();
 	private static ElasticsearchHttpFactory hfactory = DataSourceUtil.httpElasticsearch();
-//	private static ElasticsearchRestFactory rfactory = DataSourceUtil.restElasticsearch();
+	private static ElasticsearchRestFactory rfactory = DataSourceUtil.restElasticsearch();
 	/**
 	 * 访问方式:0.Transport方式[内置接口],1.HTTP[标准HTTP方式],2.Rest[内置HTTP方式]
 	 */
@@ -81,7 +81,7 @@ public class Main {
 			String result = "";
 			if(ACCESS_TYPE==0)result = tfactory.insert("tcdr", "test", json.toJSONString());
 			if(ACCESS_TYPE==1)result = hfactory.insert("hcdr", "test", json.toJSONString());
-//			if(ACCESS_TYPE==2)result = rfactory.insert("rcdr", "test", json.toJSONString());
+			if(ACCESS_TYPE==2)result = rfactory.insert("rcdr", "test", json.toJSONString());
 			atomic.incrementAndGet();
 			long end = System.currentTimeMillis();
 			double time = (end - start) / 1000.00;
@@ -102,7 +102,7 @@ public class Main {
 			String result = "";
 			if(ACCESS_TYPE==0)result = tfactory.selectAll("test", "cdr", query);
 			if(ACCESS_TYPE==1)result = hfactory.selectAll("test", "cdr", query);
-//			if(ACCESS_TYPE==2)result = rfactory.selectAll("test", "cdr", query);
+			if(ACCESS_TYPE==2)result = rfactory.selectAll("test", "cdr", query);
 			atomic.incrementAndGet();
 			long end = System.currentTimeMillis();
 			double time = (end - start) / 1000.00;

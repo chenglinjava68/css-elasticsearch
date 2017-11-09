@@ -181,7 +181,7 @@ public class HttpUtil {
 			}else{
 				connection.connect();
 			}
-			if(connection.getResponseCode()==HttpURLConnection.HTTP_OK){
+			if(connection.getResponseCode()==HttpURLConnection.HTTP_OK||connection.getResponseCode()==HttpURLConnection.HTTP_CREATED){
 				InputStream in = connection.getInputStream();
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				byte[] buff = new byte[1024];
