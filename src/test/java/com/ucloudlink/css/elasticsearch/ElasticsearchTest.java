@@ -1,34 +1,21 @@
 package com.ucloudlink.css.elasticsearch;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.cluster.metadata.IndexMetaData;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.env.Environment;
-import org.elasticsearch.index.IndexSettings;
-import org.elasticsearch.index.analysis.AnalysisRegistry;
-import org.elasticsearch.index.analysis.CharFilterFactory;
-import org.elasticsearch.index.analysis.IndexAnalyzers;
-import org.elasticsearch.index.analysis.TokenFilterFactory;
-import org.elasticsearch.index.analysis.TokenizerFactory;
-import org.elasticsearch.indices.analysis.AnalysisModule;
-import org.elasticsearch.indices.analysis.AnalysisModule.AnalysisProvider;
-import org.elasticsearch.plugins.AnalysisPlugin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ucloudlink.css.common.DataSourceUtil;
+import com.ucloudlink.css.common.BaseUtil;
 import com.ucloudlink.css.elasticsearch.http.ElasticsearchHttpFactory;
-import com.ucloudlink.css.elasticsearch.rest.ElasticsearchRestFactory;
 import com.ucloudlink.css.elasticsearch.transport.ElasticsearchTransportFactory;
 
 public class ElasticsearchTest {
-	private static ElasticsearchTransportFactory tfactory = DataSourceUtil.transportElasticsearch();
-	private static ElasticsearchHttpFactory hfactory = DataSourceUtil.httpElasticsearch();
-//	private static ElasticsearchRestFactory rfactory = DataSourceUtil.restElasticsearch();
+	private static ElasticsearchTransportFactory tfactory = BaseUtil.transportES();
+	private static ElasticsearchHttpFactory hfactory = BaseUtil.httpES();
+//	private static ElasticsearchRestFactory rfactory = BaseUtil.restES();
+//	private static ElasticsearchRestFactory hrfactory = BaseUtil.highrestES();
 	public static void test(){
 		JSONObject json = new JSONObject();
 		json.fluentPut("id", 1).fluentPut("name", "user").fluentPut("price", 2.36).fluentPut("flag", true);

@@ -12,7 +12,7 @@ import org.elasticsearch.common.UUIDs;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ucloudlink.css.common.DataSourceUtil;
+import com.ucloudlink.css.common.BaseUtil;
 import com.ucloudlink.css.elasticsearch.http.ElasticsearchHttpFactory;
 import com.ucloudlink.css.elasticsearch.rest.ElasticsearchRestFactory;
 import com.ucloudlink.css.elasticsearch.transport.ElasticsearchTransportFactory;
@@ -21,11 +21,12 @@ import com.ucloudlink.css.util.NumberUtil;
 
 public class Main {
 	private static Logger logger = LogManager.getLogger();
-	private static ElasticsearchTransportFactory tfactory = DataSourceUtil.transportElasticsearch();
-	private static ElasticsearchHttpFactory hfactory = DataSourceUtil.httpElasticsearch();
-	private static ElasticsearchRestFactory rfactory = DataSourceUtil.restElasticsearch();
+	private static ElasticsearchTransportFactory tfactory = BaseUtil.transportES();
+	private static ElasticsearchHttpFactory hfactory = BaseUtil.httpES();
+	private static ElasticsearchRestFactory rfactory = BaseUtil.restES();
+	private static ElasticsearchRestFactory hrfactory = BaseUtil.highrestES();
 	/**
-	 * 访问方式:0.Transport方式[内置接口],1.HTTP[标准HTTP方式],2.Rest[内置HTTP方式]
+	 * 访问方式:0.Transport方式[内置接口],1.HTTP[标准HTTP方式],2.Rest[内置HTTP方式],3.HighRest[内置HTTP方式]
 	 */
 	private static int ACCESS_TYPE = 0;
 	/**
@@ -82,6 +83,7 @@ public class Main {
 			if(ACCESS_TYPE==0)result = tfactory.insert("tcdr", "test", json.toJSONString());
 			if(ACCESS_TYPE==1)result = hfactory.insert("hcdr", "test", json.toJSONString());
 			if(ACCESS_TYPE==2)result = rfactory.insert("rcdr", "test", json.toJSONString());
+			if(ACCESS_TYPE==3)result = hrfactory.insert("rcdr", "test", json.toJSONString());
 			atomic.incrementAndGet();
 			long end = System.currentTimeMillis();
 			double time = (end - start) / 1000.00;
@@ -103,6 +105,7 @@ public class Main {
 			if(ACCESS_TYPE==0)result = tfactory.selectAll("test", "cdr", query);
 			if(ACCESS_TYPE==1)result = hfactory.selectAll("test", "cdr", query);
 			if(ACCESS_TYPE==2)result = rfactory.selectAll("test", "cdr", query);
+			if(ACCESS_TYPE==3)result = hrfactory.selectAll("test", "cdr", query);
 			atomic.incrementAndGet();
 			long end = System.currentTimeMillis();
 			double time = (end - start) / 1000.00;
@@ -162,7 +165,7 @@ public class Main {
 		String opt = args!=null&&args.length>2&&args[1].equalsIgnoreCase("r")?"r":"w";
 		int thread = args!=null&&args.length>3&&NumberUtil.isNumber(args[2])?Integer.valueOf(args[2]):1;
 		int type = args!=null&&args.length>4&&NumberUtil.isNumber(args[3])?Integer.valueOf(args[3]):0;
-		logger.info("--{count:"+count+",opt:"+opt+",thread:"+thread+",type:"+type+"[0.Transport,1.HTTP,2.Rest]}--"+JSON.toJSONString(args));
+		logger.info("--{count:"+count+",opt:"+opt+",thread:"+thread+",type:"+type+"[0.Transport,1.HTTP,2.Rest,3.HighRest]}--"+JSON.toJSONString(args));
 		if(args!=null&&args.length>5){
 			execute(count, opt, thread, type);
 		}else{
