@@ -11,22 +11,16 @@
 
 4.fastjson
 
-# 使用方式：
+## 使用方式：
 
-1.maven配置
+1. Maven配置
 
-`<dependencies>`
-
-	`<dependency>`
-	
-      		`<groupId>com.ucloudlink.css</groupId>`
-		
-	    	`<artifactId>css-elasticsearch</artifactId>`
-		
-	    	`<version>5.x.x</version>`
-		
-    	`</dependency>`
-	
-`</dependencies>`
+```xml
+<dependency>
+    <groupId>com.ucloudlink.css</groupId>
+    <artifactId>css-elasticsearch</artifactId>
+    <version>5.x.x</version>
+</dependency>
+```
 
 2.业务集成重写common/BaseUtil.java即可
